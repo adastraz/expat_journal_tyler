@@ -46,10 +46,20 @@ exports.up = function(knex) {
                 .inTable('images')
                 .onDelete('CASCADE')
             tbl.string('comment', 255).notNullable()
+            tbl.integer('user_id')
+                .unsigned()
+                .references('id')
+                .inTable('users')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE')
         })
 }
 
 
 exports.down = function(knex) {
-  
+    return knex.schema
+        .dropTableIfExists('comments')
+        .dropTableIfExists('images')
+        .dropTableIfExists('stories')
+        .dropTableIfExists('users')
 }
